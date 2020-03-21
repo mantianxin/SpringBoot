@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace路径-->
+<mapper namespace="com.lzw.ssm.mapper.LoginUserMapper">
+	<!--根据用户名核验用户是否存在-->
+
+	<select id="testuser" parameterType="String" resultType="com.lzw.ssm.pojo.LoginUser">
+		select  * from loginuser_copy where Uname=#{Uname}
+	</select>
+	<!--用户登录-->
+	<!-- 核查用户信息是否正确-->
+	<resultMap id="loginuser" type="com.lzw.ssm.pojo.LoginUser">
+		<result property="Uname" column="Uname"></result>
+		<result property="Upassword" column="Upassword"></result>
+	</resultMap>
+	<select id="login" resultMap="loginuser" >
+        select *  from loginuser_copy where Uname=#{Uname} and Upassword=#{Upassword}
+    </select>
+	<!--添加注册用户信息-->
+	<insert id="regist" parameterType="com.lzw.ssm.pojo.LoginUser">
+        insert into loginuser_copy(Uname,Usex,Upassword,Uemail,Uphonenumber,Uaddress,Love,Umajor,Ustarttime,Uendtime,Ubirthday) values(#{Uname},#{Usex},#{Upassword},#{Uemail},#{Uphonenumber},#{Uaddress},#{Love},#{Umajor},#{Ustarttime},#{Uendtime},#{Ubirthday})
+    </insert>
+	<!--查询用户信息-->
+	<select id="getUserList" resultType="com.lzw.ssm.pojo.LoginUser">
+		select * from loginuser_copy
+	</select>
+</mapper>
+
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lzw.ssm.mapper.CommodityMapper">
+	<!--查询订单信息 -->
+    <select id="getCommodityList" resultType="com.lzw.ssm.pojo.Commodity">
+		select * from commodity
+	</select>
+	<!--删除订单信息 -->
+	<delete id="deleteCommodity" parameterType="int">
+		delete from commodity where id = #{id}
+	</delete>
+	<!--添加订单信息 -->
+    <insert id="addCommodity" parameterType="com.lzw.ssm.pojo.Commodity">
+		insert into commodity values(#{id},#{name},#{price},#{address},#{station},#{Cname})
+	</insert>
+	<!--&lt;!&ndash; 修改订单信息 由于字段名与关键字重合，故此功能不实现&ndash;&gt;-->
+	<!--<update id="updateCommodity" parameterType="com.cenhua.dataimport.pojo.Commodity">-->
+		<!--update commodity set  namess=#{name},price=#{price},address=#{address},station=#{station},Cname=#{Cname} where id=#{id};-->
+	<!--</update>-->
+	<!-- 根据id查询订单信息-->
+	<select id="getonecommodityList" parameterType="int" resultType="com.lzw.ssm.pojo.Commodity">
+		select * from commodity where id=#{id}
+	</select>
+	<!-- 核查用户信息是否正确-->
+	<resultMap id="loginuser" type="com.lzw.ssm.pojo.LoginUser">
+        <result property="Uname" column="Uname"></result>
+        <result property="Upassword" column="Upassword"></result>
+    </resultMap>
+    <select id="login" resultMap="loginuser" >
+        select *  from loginuser where Uname=#{Uname} and Upassword=#{Upassword}
+    </select>
+    <!--添加注册用户信息-->
+    <insert id="regist" parameterType="com.lzw.ssm.pojo.LoginUser">
+        insert into loginuser(Uname,Usex,Upassword,Uemail,Uphonenumber,Uaddress,Love,Umajor,Ustarttime,Uendtime,Ubirthday) values(#{Uname},#{Usex},#{Upassword},#{Uemail},#{Uphonenumber},#{Uaddress},#{Love},#{Umajor},#{Ustarttime},#{Uendtime},#{Ubirthday})
+    </insert>
+	<!--查询用户信息-->
+	<select id="getUserList" resultType="com.lzw.ssm.pojo.LoginUser">
+		select * from loginuser
+	</select>
+
+
+
+
+</mapper>
+
+

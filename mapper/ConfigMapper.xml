@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace路径-->
+<mapper namespace="com.lzw.ssm.mapper.ConfigMapper">
+	<!--添加配置信息 parameterType全限定类名  id是接口mapper方法名 value值是数据库字段-->
+    <insert id="addConfig" parameterType="com.lzw.ssm.pojo.Config">
+		insert into config values(#{id},#{key_},#{value})
+	</insert>
+	<!--查询配置信息 -->
+	<select id="getConfigList" resultType="com.lzw.ssm.pojo.Config">
+		select * from config
+	</select>
+</mapper>
+
+

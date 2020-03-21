@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace路径-->
+<mapper namespace="com.lzw.ssm.mapper.RecordtohutuMapper">
+	<!--&lt;!&ndash;&lt;!&ndash;添加配置信息 parameterType全限定类名  id是接口mapper方法名 value值是数据库字段&ndash;&gt;&ndash;&gt;-->
+	<!--<resultMap id="ShowTotal" type="ShowRecord">-->
+		<!--        <result column="sum(spend)" property="SpendMonth" jdbcType="int"/>-->
+		<!--        <result column="month" property="month" jdbcType="VARCHAR"/>-->
+	<!--</resultMap>-->
+    <insert id="recordAdd" parameterType="com.lzw.ssm.pojo.Recordto">
+		insert into recordto(id,spend,date,type) values(#{id},#{spend},#{date},#{type})
+	</insert>
+
+
+	<!--&lt;!&ndash;查询配置信息 &ndash;&gt;-->
+	<select id="getRecordlist" resultType="com.lzw.ssm.pojo.Recordto">
+		select * from recordto
+	</select>
+
+    <!--    -->
+	<select id="showtotalmonth" resultType="com.lzw.ssm.pojo.ShowRecord">
+		select sum(spend) SpendMonth,MONTH(date) month from recordto  Group by MONTH(date)
+	</select>
+
+    <select id="showmonthtotal"  resultType="com.lzw.ssm.pojo.ShowRecord">
+		select sum(spend) SpendMonth,MONTH(date) month,YEAR(date) year  from recordto
+		where MONTH(date)=#{month} and YEAR(date) = #{year}
+		Group by MONTH(date),YEAR(date)
+	</select>
+
+	<select id="showdaytotal" resultType="com.lzw.ssm.pojo.ShowRecord">
+		select sum(spend) Spendday
+		from recordto
+		where DATE(date) = #{date}  and MONTH(date) = #{month}
+
+	</select>
+    <!--多id删除数据-->
+	<delete id="deleteid" parameterType="int">
+		delete from recordto where id=#{id}
+	</delete>
+	<!--多条件查询数据  Date(date)>=#{satrtdate} and Date(date)<=#{enddate}-->
+	<select id="getRecordListtype" resultType="com.lzw.ssm.pojo.Recordto" >
+		select *  from recordto
+		where type=#{type}
+		<if test="#{satrtdate}.toString() != #{endDate}.toString()">
+			and Date(date) between #{satrtdate} and #{enddate}
+		</if>
+	</select>
+    <!--查询每周总消费-->
+    <select id="showweektotal" resultType="com.lzw.ssm.pojo.ShowRecord">
+        select sum(spend) SpendWeek from recordto
+        where
+        <if test="#{datastartupload}.toString() != #{dateendupload}.toString()">
+             Date(date) between #{datastartupload} and #{dateendupload}
+        </if>
+    </select>
+
+    <select id="showtotalyear" resultType="com.lzw.ssm.pojo.ShowRecord">
+        select sum(spend) Spendyear from  recordto
+        where YEAR(date) = #{year}
+    </select>
+</mapper>

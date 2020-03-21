@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace路径-->
+<mapper namespace="com.lzw.ssm.mapper.CategoryhutuMapper">
+	<!--添加配置信息 parameterType全限定类名  id是接口mapper方法名 value值是数据库字段-->
+    <insert id="addCategory" parameterType="com.lzw.ssm.pojo.Category">
+		insert into category values(#{id},#{name})
+	</insert>
+	<!--查询配置信息 -->
+	<select id="getCategorylist" resultType="com.lzw.ssm.pojo.Category">
+		select * from category
+	</select>
+	<!-- 修改配置信息-->
+	<update id="updateCategory" parameterType="com.lzw.ssm.pojo.Category">
+		update category set  name=#{name} where id=#{id};
+	</update>
+</mapper>
+
+
